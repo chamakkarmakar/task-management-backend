@@ -26,7 +26,12 @@ async function run() {
         const tasksDB = client.db("tasksDB");
         const tasksCollection = tasksDB.collection("tasksCollection");
 
-       
+        // get all data 
+        app.get("/allTasks", async (req, res) => {
+            const tasksData = tasksCollection.find();
+            const result = await tasksData.toArray();
+            res.send(result);
+        });
 
         // create data 
         app.post("/allTasks", async (req, res) => {
