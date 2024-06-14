@@ -33,10 +33,30 @@ async function run() {
             res.send(result);
         });
 
+        // get single data
+        app.get("/allTasks/:id", async (req, res) => {
+            const id = req.params.id;
+            const tasksData = await tasksCollection.findOne({
+                _id: new ObjectId(id),
+            });
+            res.send(tasksData);
+        });
+
         // create data 
         app.post("/allTasks", async (req, res) => {
             const tasksData = req.body;
             const result = await tasksCollection.insertOne(tasksData);
+            res.send(result);
+        });
+
+        // update data 
+        app.patch("/allTasks/:id", async (req, res) => {
+            const id = req.params.id;
+            const updatedData = req.body;
+            const result = await tasksCollection.updateOne(
+                { _id: new ObjectId(id) },
+                { $set: updatedData }
+            );
             res.send(result);
         });
 
